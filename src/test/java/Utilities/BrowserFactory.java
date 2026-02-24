@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.Test;
 
 public class BrowserFactory {
 
@@ -22,5 +23,10 @@ public class BrowserFactory {
         driver.manage(). window().maximize();
         driver.get(url);
         return driver;
+    }
+    @Test
+    public void testBrowserFactory() {
+        WebDriver driver = startBrowser("chrome", "https://ndosisimplifiedautomation.vercel.app/");
+        // Add assertions or interactions with the browser here
     }
 }
