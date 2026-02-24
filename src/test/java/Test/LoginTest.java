@@ -1,30 +1,33 @@
 package Test;
 
 import Base.BaseTest;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class LoginTest extends BaseTest {
 
-    @Test
-    public void loginWithValidDetails() throws InterruptedException {
+    @Test(dataProvider = "testdata")
+    public void loginWithValidDetails(String email, String password) throws InterruptedException {
 
-        driver.findElement(By.xpath("//*[@id=\"app-root\"]/nav/div[1]/div[3]/button")).click();
-        driver.findElement(By.id("login-email")).sendKeys("ndabemazii@gmail.com");
-        driver.findElement(By.id("login-password")).sendKeys("Mazii@053103");
-        driver.findElement(By.id("login-submit")).click();
-        driver.get("https://ndosisimplifiedautomation.vercel.app/#dashboard");
-
+        loginPage.clickLoginButton();
+        Thread.sleep(2000);
+        loginPage.enterEmail(email);
+        loginPage.enterPassword(password);
+        loginPage.clickSubmitButton();
         Thread.sleep(5000);
-
-        String myLearningText = driver.findElement(By.xpath("//*[@id=\"app-root\"]/nav/div[1]/div[2]/div[4]/button/span[2]")).getText();
-
-        Assert.assertEquals(myLearningText, "My Learning");
-
+        loginPage.verifyMyLearningText("My Learning");
 
     }
 
+    @DataProvider(name = "testdata")
+    public Object[][] getData() {
+        return new Object[][]{
+                {"ndabemazii@gmail.com", "Mazii@053103" },
+                {"Funda@gmail.com", "Funda@2026"},
+                {"Kingmolebatsi2@gmail.com", "!2345678"},
+                {"tumi@dima.com", "123@4567"}
+
+        };
+    }
 }
+
